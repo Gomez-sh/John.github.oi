@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>For Akii ♡</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            background: linear-gradient(135deg, #1a0033, #33001a);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            overflow: hidden;
+            font-family: 'Arial', sans-serif;
+        }
+
+        .heart-container {
+            position: relative;
+            width: 320px;
+            height: 320px;
+            opacity: 0;
+            animation: fadeIn 2.5s forwards;
+            animation-delay: 2.5s;
+        }
+
+        .text-item {
+            position: absolute;
+            color: #ff99cc;
+            font-size: 13px;
+            font-weight: bold;
+            white-space: nowrap;
+            text-shadow: 0 0 12px #ff3399, 0 0 25px #ff0066;
+            pointer-events: none;
+            animation: floatPulse 6s infinite ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        @keyframes floatPulse {
+            0% {
+                transform: translate(var(--x), var(--y)) scale(0.9);
+                opacity: 0.5;
+            }
+            50% {
+                transform: translate(calc(var(--x) * 1.08), calc(var(--y) - 20px)) scale(1.15);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(var(--x), calc(var(--y) - 40px)) scale(0.9);
+                opacity:0.5 ;
+""            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="heart-container" id="heart"></div>
+
+    <script>
+        const container = document.getElementById('heart');
+        const text = "happy valentines💐";
+        const totalPoints = 70; // a bit more for fuller heart
+
+        for (let i = 0; i < totalPoints; i++) {
+            const span = document.createElement('div');
+            span.className = 'text-item';
+            span.innerText = text;
+
+            const t = (i / totalPoints) * 2 * Math.PI;
+            const x = 17 * Math.pow(Math.sin(t), 3);
+            const y = -(14 * Math.cos(t) - 5 * Math.cos(2 * t) - 2 * Math.cos(3 * t) - Math.cos(4 * t));
+
+            span.style.setProperty('--x', (x * 10) + 'px');
+            span.style.setProperty('--y', (y * 10) + 'px');
+
+            // Staggered start after fade-in + random-ish delay for natural float
+            const delay = 2.5 + (i * 0.04) + (Math.random() * 1.5);
+            span.style.animationDelay = delay + 's';
+
+            container.appendChild(span);
+        }
+    </script>
+</body>
+</html>
